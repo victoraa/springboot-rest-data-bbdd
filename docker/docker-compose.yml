@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  user-microservice:
+    image: service-java/app:1.0.0
+    container_name: serverDatos
+    build:
+      context: ../
+      dockerfile: docker/java/Dockerfile
+      args:
+        - "JAR_PATH=target/serverDatosRest-0.0.1-SNAPSHOT.jar"
+    environment:
+      - "JAR_NAME=serverDatosRest-0.0.1-SNAPSHOT.jar"
+    ports:
+      - 8090:8090
+    networks:
+      - mynet
+      
+networks:
+  mynet:
+    driver: bridge
+  

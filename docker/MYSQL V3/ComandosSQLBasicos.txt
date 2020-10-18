@@ -1,0 +1,6 @@
+--CREACION DE USER EN BBDD (USAMOS % debido a que queremos que acepte desde todos las ips)
+
+GRANT ALL PRIVILEGES ON *.* TO 'viewnext'@'%' 
+    IDENTIFIED BY 'mipassword' 
+    WITH GRANT OPTION;
+FLUSH PRIVILEGES;
