@@ -1,7 +1,5 @@
 package es.viewnext.servdatos.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -12,20 +10,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import es.viewnext.servdatos.beans.Garbage;
-import es.viewnext.servdatos.beans.GarbageRepository;
+import es.viewnext.servdatos.beans.Users;
+import es.viewnext.servdatos.beans.UsersRepository;
 
 /**
  * Servicios de la clase garbage
  *
  */
 @Service
-public class GarbageService {
+public class UsersService {
 
-	private final static Logger logger = LoggerFactory.getLogger(GarbageService.class);
+	private final static Logger logger = LoggerFactory.getLogger(UsersService.class);
 
 	/** Repositorio de accesos */
 	@Autowired
-	private GarbageRepository garbRepo;
+	private UsersRepository usersRepo;
 
 	/**
 	 * Devuelve la contidad de elementos que hay en la tabla
@@ -35,36 +34,19 @@ public class GarbageService {
 	public Long getCountDatabase() {
 		logger.info("Service. Count");
 		sleep();
-		return garbRepo.count();
+		return usersRepo.count();
 	}
 
 	/**
 	 * Obtiene objeto por su id
 	 * 
 	 * @param id Identificar
-	 * @return Objeto si extei
+	 * @return Objeto si exte
 	 */
-	public Optional<Garbage> get(Integer id) {
+	public Optional<Users> get(Integer id) {
 		logger.info("Service. Get " + id);
 		sleep();
-		return garbRepo.findById(id);
-	}
-	
-	/**
-	 * Get all databse elements
-	 * @return
-	 * 	List all databse elements
-	 */
-	public List<Garbage> getAllGarbage() {
-		logger.info("Service. GetAll Garbages Elements: ");
-		sleep();
-		
-		List<Garbage> salida = new ArrayList<>();
-		Iterable<Garbage> it = garbRepo.findAll();
-		for (Garbage elUs : it) {
-			salida.add(elUs);
-		}
-		return salida;
+		return usersRepo.findById(id);
 	}
 
 	/**
@@ -73,10 +55,10 @@ public class GarbageService {
 	 * @param garb
 	 * @return Objeto insertado
 	 */
-	public Garbage insert(Garbage garb) {
-		logger.info("Service. Insert");
+	public Users insert(Users garb) {
+		logger.info("Service. Insert usuario");
 		sleep();
-		return garbRepo.save(garb);
+		return usersRepo.save(garb);
 	}
 
 	/**
@@ -87,20 +69,11 @@ public class GarbageService {
 	public void delete(Integer id) {
 		logger.info("Service. Delete id: " + id);
 		sleep();
-		garbRepo.deleteById(id);
+		usersRepo.deleteById(id);
 
 	}
 
-	public String getRestJson() {
-		logger.info("Temperature get http api");
-		sleep();
-		RestTemplate restTemplate = new RestTemplate();
-		String salida = restTemplate.getForObject(
-				"http://api.openweathermap.org/data/2.5/weather?q=Madrid&appid=69185f607c03aa7dd139923f388591db",
-				String.class);
-
-		return salida;
-	}
+	
 
 	/**
 	 * Sleep para simular retardos en las consultas
@@ -116,5 +89,5 @@ public class GarbageService {
 			logger.error(e.getMessage(), e);
 		}
 	}
-	
+
 }
